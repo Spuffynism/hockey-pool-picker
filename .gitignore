@@ -1,0 +1,6 @@
+**/__pycache__/**
+.ruff_cache
+NOTES.md
+data
+!data/runs
+.idea

@@ -1,0 +1,150 @@
+Some players do not have a match between hockey-reference and cap friendly:
+    name position  games_played  goals  assists -9999 normalized_name          name_y  games_played_y  cap_hit
+659  NaN      NaN           NaN    NaN      NaN   NaN      hunterdrew     Hunter Drew               2   793333
+660  NaN      NaN           NaN    NaN      NaN   NaN   lukewitkowski  Luke Witkowski               1   750000
+661  NaN      NaN           NaN    NaN      NaN   NaN   masongeertsen  Mason Geertsen              25   725000
+Some players do not have a match between hockey-reference and cap friendly:
+               name position  games_played  goals  assists      -9999 normalized_name name_y  games_played_y  cap_hit
+77      Hunter Drew        D             2      0        0   drewhu01      hunterdrew    NaN             NaN      NaN
+104  Mason Geertsen        D            25      0        0  geertma01   masongeertsen    NaN             NaN      NaN
+336  Luke Witkowski        D             1      0        0  witkolu01   lukewitkowski    NaN             NaN      NaN
+2022 pick:
+                  name position  games_played  goals  assists    normalized_name  cap_hit  value   weight  wins   saves  saves_percent  shutouts
+0       Elias Lindholm        C            82     42       40      eliaslindholm  4850000    124  4850000   NaN     NaN            NaN       NaN
+1   Jonathan Huberdeau       LW            80     30       85  jonathanhuberdeau  5900000    145  5900000   NaN     NaN            NaN       NaN
+2         Jordan Kyrou        C            74     27       48        jordankyrou  2800000    102  2800000   NaN     NaN            NaN       NaN
+3          J.T. Miller        C            80     32       67           jtmiller  5250000    131  5250000   NaN     NaN            NaN       NaN
+4       Leon Draisaitl        C            80     55       55      leondraisaitl  8500000    165  8500000   NaN     NaN            NaN       NaN
+5      Michael Bunting       LW            79     23       40     michaelbunting   950000     86   950000   NaN     NaN            NaN       NaN
+6          Roope Hintz       LW            80     37       35         roopehintz  3150000    109  3150000   NaN     NaN            NaN       NaN
+7         Ryan Hartman       RW            82     34       31        ryanhartman  1700000     99  1700000   NaN     NaN            NaN       NaN
+8        Tage Thompson        C            78     38       30       tagethompson  1400000    106  1400000   NaN     NaN            NaN       NaN
+9          Tim Stützle       LW            79     22       36         timstutzle   925000     80   925000   NaN     NaN            NaN       NaN
+10       Trevor Zegras        C            75     23       38       trevorzegras   925000     84   925000   NaN     NaN            NaN       NaN
+11          Troy Terry        C            75     37       30          troyterry  1450000    104  1450000   NaN     NaN            NaN       NaN
+12          Cale Makar        D            77     28       58          calemakar  9000000    200  9000000   NaN     NaN            NaN       NaN
+13       Evan Bouchard        D            81     12       31       evanbouchard   863333     98   863333   NaN     NaN            NaN       NaN
+14         Kris Letang        D            78     10       58         krisletang  7250000    146  6100000   NaN     NaN            NaN       NaN
+15       Moritz Seider        D            82      7       43       moritzseider   863333    107   863333   NaN     NaN            NaN       NaN
+16          Roman Josi        D            80     23       73          romanjosi  9059000    215  9059000   NaN     NaN            NaN       NaN
+17       Victor Hedman        D            82     20       65       victorhedman  7875000    190  7875000   NaN     NaN            NaN       NaN
+18   Frederik Andersen        G            52      0        4   frederikandersen  4500000    133  4500000  35.0  1320.0          0.922       4.0
+19     Jacob Markström        G            63      0        3     jacobmarkstrom  6000000    162  6000000  37.0  1617.0          0.922       9.0
+     name   weight  value
+ forwards 37800000   1335
+defenders 33760666    956
+  goalies 10500000    295
+    total 82060666   2586
+
+Translated to 2023
+                   name position  games_played  goals  assists    normalized_name  cap_hit  value   weight  wins   saves  saves_percent  shutouts
+150      Elias Lindholm        C            80     22       42      eliaslindholm  4850000     86  4850000   NaN     NaN            NaN       NaN
+238  Jonathan Huberdeau       LW            79     15       40  jonathanhuberdeau  5900000     70  5900000   NaN     NaN            NaN       NaN
+244        Jordan Kyrou        C            79     37       36        jordankyrou  2800000    110  2800000   NaN     NaN            NaN       NaN
+254         J.T. Miller        C            81     32       50           jtmiller  5250000    114  5250000   NaN     NaN            NaN       NaN
+284      Leon Draisaitl        C            80     52       76      leondraisaitl  8500000    180  8500000   NaN     NaN            NaN       NaN
+331     Michael Bunting       LW            82     23       26     michaelbunting   950000     72   950000   NaN     NaN            NaN       NaN
+426         Roope Hintz       LW            73     37       38         roopehintz  3150000    112  3150000   NaN     NaN            NaN       NaN
+432        Ryan Hartman       RW            59     15       22        ryanhartman  1700000     52  1700000   NaN     NaN            NaN       NaN
+464       Tage Thompson        C            78     47       47       tagethompson  1400000    141  1400000   NaN     NaN            NaN       NaN
+476         Tim Stützle       LW            78     39       51         timstutzle   925000    129   925000   NaN     NaN            NaN       NaN
+487       Trevor Zegras        C            81     23       42       trevorzegras   925000     88   925000   NaN     NaN            NaN       NaN
+489          Troy Terry        C            70     23       38          troyterry  1450000     84  1450000   NaN     NaN            NaN       NaN
+38           Cale Makar        D            60     17       49          calemakar  9000000    149  9000000   NaN     NaN            NaN       NaN
+91        Evan Bouchard        D            82      8       32       evanbouchard   863333     88   863333   NaN     NaN            NaN       NaN
+164         Kris Letang        D            64     12       29         krisletang  6100000     94  6100000   NaN     NaN            NaN       NaN
+201       Moritz Seider        D            82      5       37       moritzseider   863333     89   863333   NaN     NaN            NaN       NaN
+237          Roman Josi        D            67     18       41          romanjosi  9059000    136  9059000   NaN     NaN            NaN       NaN
+271       Victor Hedman        D            76      9       40       victorhedman  7875000    107  7875000   NaN     NaN            NaN       NaN
+34    Frederik Andersen        G            34      0        1   frederikandersen  4500000     70  4500000  21.0   767.0          0.903       1.0
+40      Jacob Markström        G            59      0        2     jacobmarkstrom  6000000     78  6000000  23.0  1376.0          0.892       1.0
+     name   weight  value
+ forwards 37800000   1238
+defenders 33760666    663
+  goalies 10500000    148
+    total 82060666   2049
+
+Trading...
+Looking from September 2022 24 to October 2022 31
+October 2022: 212
+- Elias Lindholm 4850000
+- Jonathan Huberdeau 5900000
+- Kris Letang 6100000
+- Moritz Seider 863333
+- Roman Josi 9059000
++ David Pastrňák 6666667
++ Gabriel Vilardi 825000
++ Erik Karlsson 11500000
++ Rasmus Dahlin 6000000
++ Sebastian Aho 825000
+
+Looking from October 2022 25 to November 2022 30
+November 2022: 412
+- Ryan Hartman 1700000
+- Evan Bouchard 863333
+- Victor Hedman 7875000
+- Frederik Andersen 4500000
+- Jacob Markström 6000000
++ Jason Robertson 7750000
++ Brandon Montour 3500000
++ Josh Morrissey 6250000
++ Logan Thompson 766667
++ Vítek Vaněček 3400000
+
+Looking from November 2022 24 to December 2022 31
+December 2022: 427
+- J.T. Miller 5250000
+- Trevor Zegras 925000
+- Troy Terry 1450000
+- Cale Makar 9000000
+- Vítek Vaněček 3400000
++ Connor McDavid 12500000
++ Dylan Cozens 894167
++ Ryan Nugent-Hopkins 5125000
++ Erik Gustafsson 800000
++ Pyotr Kochetkov 842500
+
+Looking from December 2022 25 to January 2023 31
+January 2023: 439
+- Jason Robertson 7750000
+- Roope Hintz 3150000
+- Josh Morrissey 6250000
+- Logan Thompson 766667
+- Pyotr Kochetkov 842500
++ Jack Hughes 8000000
++ Trevor Zegras 925000
++ Vince Dunn 4000000
++ Jake Oettinger 4000000
++ Martin Jones 2000000
+
+Looking from January 2023 25 to February 2023 28
+February 2023: 308
+- David Pastrňák 6666667
+- Gabriel Vilardi 825000
+- Rasmus Dahlin 6000000
+- Jake Oettinger 4000000
+- Martin Jones 2000000
++ Claude Giroux 6500000
++ Dawson Mercer 894167
++ Josh Morrissey 6250000
++ Alexandar Georgiev 3400000
++ Ilya Samsonov 1800000
+
+Looking from February 2023 22 to March 2023 31
+March 2023: 455
+- Jack Hughes 8000000
+- Michael Bunting 950000
+- Erik Gustafsson 800000
+- Erik Karlsson 11500000
+- Ilya Samsonov 1800000
++ Clayton Keller 7150000
++ Nathan MacKinnon 6300000
++ Evan Bouchard 863333
++ Miro Heiskanen 8450000
++ Stuart Skinner 750000
+
+Looking from March 2023 25 to April 2023 30
+April 2023: 249
+
+
+Total value: 2502 (124 to go)
