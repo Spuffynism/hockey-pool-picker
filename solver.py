@@ -63,8 +63,8 @@ class Solution:
         removed = []
         added = []
         for before_group, after_group in zip(self.picks(), after.picks()):
-            after_names = [player["name"] for player in after_group]
-            before_names = [player["name"] for player in before_group]
+            after_names = set([player["name"] for player in after_group])
+            before_names = set([player["name"] for player in before_group])
 
             removed += [
                 player for player in before_group if player["name"] not in after_names
