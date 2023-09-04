@@ -53,9 +53,6 @@ class SeasonSimulator:
         self.evaluation_strategy = evaluation_strategy
         self.picking_strategy = picking_strategy
 
-    def evaluate_period(self, players_over_period, solution, evaluation_strategy):
-        pass
-
     def progress(self, solution):
         # regular season is from October 7, 2022, and ended April 14, 2023.
         games = HockeyReferenceGamesSource(self.year + 1).load()
@@ -110,8 +107,8 @@ class SeasonSimulator:
 
             if (period_year, period_month) == periods[-1]:
                 print(
-                    f'Looking from {start_look.strftime("%B %Y %d")} to '
-                    f'{end_look.strftime("%B %Y %d")}'
+                    f'Looking from {start_look.strftime("%b %d, %Y")} to '
+                    f'{end_look.strftime("%b %d, %Y")}'
                 )
                 print(f'{start_pts.strftime("%B %Y")}: {value}')
                 print("\n")

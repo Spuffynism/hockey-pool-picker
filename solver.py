@@ -151,12 +151,14 @@ class CPSATSolver:
         return self.solution
 
     def _maximize(self, x, pool):
-        # TODO: We could use WeightedSum here. It might be more optimized?
-        objective = []
+        expressions = []
+        coefficients = []
         for j, players in enumerate(pool):
-            objective += [x[i, j] * players[i]["value"] for i in range(len(players))]
+            for i in range(len(players)):
+                expressions.append(x[i, j])
+                coefficients.append(players[i]["value"])
 
-        self.model.Maximize(cp_model.LinearExpr.Sum(objective))
+        self.model.Maximize(cp_model.LinearExpr.WeightedSum(expressions, coefficients))
 
     def _solve(self, x, pool):
         solver = cp_model.CpSolver()
