@@ -74,10 +74,16 @@ class Solution:
             ]
 
         for player in removed:
-            print(f"\033[31m- {player['name']} {player['weight']} {player['value']}\033[39m")
+            print(
+                f"\033[31m- {player['name']} {player['weight']} {player['value']}"
+                f"\033[39m"
+            )
 
         for player in added:
-            print(f"\033[32m+ {player['name']} {player['weight']} {player['value']}\033[39m")
+            print(
+                f"\033[32m+ {player['name']} {player['weight']} {player['value']}"
+                f"\033[39m"
+            )
 
 
 FORWARDS_COUNT = 12
@@ -117,12 +123,10 @@ class CPSATSolver:
             self.model.Add(sum(x[i, j] for i in range(players)) == count)
 
         self.model.Add(
-            (
-                sum(
-                    x[i, j] * pool[j][i]["weight"]
-                    for j in range(len(players_count))
-                    for i in range(players_count[j])
-                )
+            sum(
+                x[i, j] * pool[j][i]["weight"]
+                for j in range(len(players_count))
+                for i in range(players_count[j])
             )
             <= salary_cap
         )
