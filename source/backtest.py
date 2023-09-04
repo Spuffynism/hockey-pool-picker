@@ -8,9 +8,9 @@ class BacktestingSource:
         self.present = PlayersSource(past_season + 1)
 
     def load(self, picking_strategy, evaluation_strategy):
-        past_pool = [[], [], []]
-        present_pool = [[], [], []]
-        for i, player_type in enumerate(PLAYER_TYPES):
+        past_pool = []
+        present_pool = []
+        for player_type in PLAYER_TYPES:
             (past_players, present_players) = self._keep_intersection(
                 self.past.load(player_type), self.present.load(player_type)
             )
@@ -25,12 +25,11 @@ class BacktestingSource:
             if not past_players["normalized_name"].equals(
                 present_players["normalized_name"]
             ):
-                raise Exception(f"{PLAYER_TYPES[i]} do not match!")
+                raise Exception(f"{player_type} do not match!")
 
             past_players["value"] = picking_strategy.apply(past_players, player_type)
             # to ensure we have a pool valid for next year, we use players' next year
             # cap hit as weight.
-            # TODO(nico): Make sure players are same in both seasons
             past_players["weight"] = present_players["cap_hit"]
 
             present_players["value"] = evaluation_strategy.apply(
@@ -38,8 +37,8 @@ class BacktestingSource:
             )
             present_players["weight"] = present_players["cap_hit"]
 
-            past_pool[i] = past_players
-            present_pool[i] = present_players
+            past_pool.append(past_players)
+            present_pool.append(present_players)
 
         return past_pool, present_pool
 
