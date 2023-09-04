@@ -74,10 +74,10 @@ class Solution:
             ]
 
         for player in removed:
-            print(f"- {player['name']} {player['weight']}")
+            print(f"\033[31m- {player['name']} {player['weight']} {player['value']}\033[39m")
 
         for player in added:
-            print(f"+ {player['name']} {player['weight']}")
+            print(f"\033[32m+ {player['name']} {player['weight']} {player['value']}\033[39m")
 
 
 FORWARDS_COUNT = 12
