@@ -120,14 +120,18 @@ class CPSATSolver:
 
         for j, (players, count) in enumerate(zip(players_count, PICKS_COUNT)):
             # we must have the exact player count
-            self.model.Add(cp_model.LinearExpr.Sum([x[i, j] for i in range(players)]) == count)
+            self.model.Add(
+                cp_model.LinearExpr.Sum([x[i, j] for i in range(players)]) == count
+            )
 
         self.model.Add(
-            cp_model.LinearExpr.Sum([
-                x[i, j] * pool[j][i]["weight"]
-                for j in range(len(players_count))
-                for i in range(players_count[j])
-            ])
+            cp_model.LinearExpr.Sum(
+                [
+                    x[i, j] * pool[j][i]["weight"]
+                    for j in range(len(players_count))
+                    for i in range(players_count[j])
+                ]
+            )
             <= salary_cap
         )
 
@@ -143,7 +147,10 @@ class CPSATSolver:
         for i, group in enumerate(solution.pick_indices):
             picks += [x[j, i] for j in group]
 
-        self.model.Add(cp_model.LinearExpr.Sum(picks) >= cp_model.LinearExpr.Sum(PICKS_COUNT) - trades_count)
+        self.model.Add(
+            cp_model.LinearExpr.Sum(picks)
+            >= cp_model.LinearExpr.Sum(PICKS_COUNT) - trades_count
+        )
 
         self._maximize(x, pool)
         self._solve(x, pool)

@@ -179,7 +179,7 @@ class HockeyReferenceGamesSource:
                 saves_percent = cols[5].text.strip()
 
                 if decision not in ["W", "L", "O"]:
-                    print(Exception(f"Unknown decision: {decision}"))
+                    raise Exception(f"Unknown decision: {decision}")
 
                 goalies.append(
                     {
@@ -193,9 +193,6 @@ class HockeyReferenceGamesSource:
                     }
                 )
 
-        print(date)
-        [print(score) for score in scores]
-        print(goalies)
         return date, scores, goalies
 
 
