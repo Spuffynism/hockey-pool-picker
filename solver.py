@@ -172,7 +172,7 @@ class CPSATSolver:
         status = solver.Solve(self.model)
 
         if status != cp_model.OPTIMAL:
-            raise "No optimal solution."
+            raise Exception("No optimal solution.")
 
         picks = [[], [], []]
         pick_indices = [[], [], []]

@@ -48,7 +48,7 @@ class CapFriendlyPlayersSource:
 
     def crawl(self, player_type):
         players = []
-        for page in range(1, 1000 + 1):
+        for page in range(1, 20):
             url = self.build_url(player_type, page)
             print(url)
             response = requests.request("GET", url)
@@ -115,7 +115,7 @@ class CapFriendlyPlayersSource:
 
 
 def main():
-    for season in [2022, 2023]:
+    for season in [2024]:
         source = CapFriendlyPlayersSource(season)
         for player_type in ["forwards", "defense", "goalies"]:
             players = source.crawl(player_type)
