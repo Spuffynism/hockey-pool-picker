@@ -11,16 +11,10 @@ Data for this project is sourced from:
 
 ## Usage
 
-### Setup
-
-```shell
-make boostrap
-```
-
 ### Running the solver
 
 ```shell
-make run
+uv run src/main.py
 ```
 
 ### Crawling
@@ -28,5 +22,12 @@ make run
 The Hockey Reference and CapFriendly crawlers are ran with:
 
 ```shell
-make crawl
+uv run src/hockey_pool_picker/crawl.py
+```
+
+## Linting
+
+```shell
+uv run ruff format . src
+uv run ruff check --fix . src
 ```
