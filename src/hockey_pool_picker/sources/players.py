@@ -1,15 +1,16 @@
 import pandas as pd
 
-from source.common import normalize_name, RETIRED_PLAYERS
-from source.hockey_reference import HockeyReferencePlayersSource
-from source.cap_friendly import CapFriendlyPlayersSource
+from hockey_pool_picker.common import normalize_name, RETIRED_PLAYERS
+from hockey_pool_picker.season import Season
+from hockey_pool_picker.sources.hockey_reference_players import HockeyReferencePlayersSource
+from hockey_pool_picker.sources.marqueur_cap_hit import MarqueurCapHitSource
 
 
 class PlayersSource:
-    def __init__(self, season):
+    def __init__(self, season: Season):
         self.season = season
         self.players_source = HockeyReferencePlayersSource(season)
-        self.players_with_cap_hit_source = CapFriendlyPlayersSource(season)
+        self.players_with_cap_hit_source = MarqueurCapHitSource(season)
 
     def load(self, player_type, value=None, weight=None):
         players = self.players_source.load(player_type)
@@ -37,17 +38,16 @@ class PlayersSource:
             players_with_cap_hit,
             how="outer",
             on=["normalized_name"],
-            suffixes=("", "_y"),
+            suffixes=("_from_players_stats_source", "_from_cap_hit_source"),
         )
-        condition = (df["name"].isna() | df["name_y"].isna()) & (
-            ~df["name"].isin(RETIRED_PLAYERS) & ~df["name_y"].isin(RETIRED_PLAYERS)
+        condition = (df["name_from_players_stats_source"].isna() | df["name_from_cap_hit_source"].isna()) & (
+            ~df["name_from_players_stats_source"].isin(RETIRED_PLAYERS) & ~df["name_from_cap_hit_source"].isin(RETIRED_PLAYERS)
         )
         if not df[condition].empty:
             print(
-                "Some players do not have a match between hockey-reference and cap "
-                "friendly:"
+                f"Some players do not have a match between sources in season {self.season}:"
             )
-            print(df[condition].to_string())
+            print(df[condition][["name_from_cap_hit_source", "name_from_players_stats_source"]].to_string())
 
     def _sew_to_cap_hit(self, players, players_with_cap_hit):
         df = pd.merge(

@@ -4,10 +4,12 @@ from datetime import datetime
 from statistics import mean
 
 from dateutil.relativedelta import relativedelta
+from prompt_toolkit.win32_types import SMALL_RECT
 
-from solver import Solution
-from source.common import PLAYER_TYPES
-from source.hockey_reference import HockeyReferenceGamesSource
+from hockey_pool_picker.season import Season
+from hockey_pool_picker.solver import Solution
+from hockey_pool_picker.common import PLAYER_TYPES
+from hockey_pool_picker.sources.hockey_reference_games import HockeyReferenceGamesSource
 
 
 def evaluate_period(players_over_period, solution, evaluation_strategy):
@@ -27,11 +29,11 @@ def evaluate_period(players_over_period, solution, evaluation_strategy):
     return summary.iloc[-1]["value"]
 
 
-def get_month_period(year, month, days=0):
-    start = datetime(year, month, 1) + relativedelta(days=days)
+def get_month_period(season: Season, month, days=0):
+    start = datetime(season.start, month, 1) + relativedelta(days=days)
 
-    last_day_of_month = calendar.monthrange(year, month)[1]
-    end = datetime(year, month, last_day_of_month, 23, 59, 59, 999999)
+    last_day_of_month = calendar.monthrange(season.start, month)[1]
+    end = datetime(season.start, month, last_day_of_month, 23, 59, 59, 999999)
 
     return start, end
 
@@ -40,35 +42,36 @@ class SeasonSimulator:
     def __init__(
         self,
         solver,
-        year,
+        season: Season,
         present_pool,
         salary_cap,
         evaluation_strategy,
         picking_strategy,
     ):
         self.solver = solver
-        self.year = year
+        self.season = season
         self.present_pool = present_pool
         self.salary_cap = salary_cap
         self.evaluation_strategy = evaluation_strategy
         self.picking_strategy = picking_strategy
 
     def progress(self, solution):
+        # TODO(nico): Revisit this amazingly beautiful logic 😇
         # regular season is from October 7, 2022, and ended April 14, 2023.
-        games = HockeyReferenceGamesSource(self.year + 1).load()
+        games = HockeyReferenceGamesSource(self.season).load()
         periods = [
-            (self.year, 10),
-            (self.year, 11),
-            (self.year, 12),
-            (self.year + 1, 1),
-            (self.year + 1, 2),
-            (self.year + 1, 3),
-            (self.year + 1, 4),
+            (self.season, 10),
+            (self.season, 11),
+            (self.season, 12),
+            (self.season.next(), 1),
+            (self.season.next(), 2),
+            (self.season.next(), 3),
+            (self.season.next(), 4),
         ]
         total_value = 0
-        for period_year, period_month in periods:
-            start_look, end_look = get_month_period(period_year, period_month, days=-7)
-            start_pts, end_pts = get_month_period(period_year, period_month)
+        for period_season, period_month in periods:
+            start_look, end_look = get_month_period(period_season, period_month, days=-7)
+            start_pts, end_pts = get_month_period(period_season, period_month)
 
             # - we could pick only players that have increased in the past 2-3 periods,
             # instead of checking only last period
@@ -105,7 +108,7 @@ class SeasonSimulator:
             )
             total_value += value
 
-            if (period_year, period_month) == periods[-1]:
+            if (period_season, period_month) == periods[-1]:
                 print(
                     f'Looking from {start_look.strftime("%b %d, %Y")} to '
                     f'{end_look.strftime("%b %d, %Y")}'

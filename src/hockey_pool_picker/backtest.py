@@ -1,11 +1,15 @@
-from source.common import inner_merge_dropping_duplicates, PLAYER_TYPES
-from source.complete import PlayersSource
+from hockey_pool_picker.common import (
+    inner_merge_dropping_duplicates,
+    PLAYER_TYPES,
+)
+from hockey_pool_picker.season import Season
+from hockey_pool_picker.sources.players import PlayersSource
 
 
 class BacktestingSource:
-    def __init__(self, past_season):
+    def __init__(self, past_season: Season):
         self.past = PlayersSource(past_season)
-        self.present = PlayersSource(past_season + 1)
+        self.present = PlayersSource(Season(start=past_season.start + 1))
 
     def load(self, picking_strategy, evaluation_strategy):
         past_pool = []
@@ -19,8 +23,7 @@ class BacktestingSource:
                 past_players["normalized_name"].to_list(),
                 present_players["normalized_name"].to_list(),
             ):
-                if a != b:
-                    raise Exception(f"Names do not match {a} != {b}")
+                assert a == b, f"Names of type {player_type} do not match {a} != {b}"
 
             if not past_players["normalized_name"].equals(
                 present_players["normalized_name"]

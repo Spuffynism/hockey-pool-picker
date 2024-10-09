@@ -1,8 +1,6 @@
 import pandas as pd
 from ortools.sat.python import cp_model
 
-from source.hockey_reference import ID_COLUMN
-
 
 class Solution:
     def __init__(self, picks, pick_indices=[]):
@@ -33,7 +31,7 @@ class Solution:
             + self.defenders_group["players"]
             + self.goalies_group["players"]
         )
-        print(df[df.columns[~df.columns.isin([ID_COLUMN])]].to_string())
+        #print(df[df.columns[~df.columns.isin([ID_COLUMN])]].to_string())
 
         print(self._build_summary().to_string(index=False))
 

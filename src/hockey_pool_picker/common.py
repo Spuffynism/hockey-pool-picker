@@ -1,8 +1,8 @@
 import pandas as pd
 from unidecode import unidecode
 
+# bad is from the cap hit source
 # good is from hockey reference because it's where we get the stats
-# bad is from cap friendly because it's where we get the cap hit
 # bad -> good
 corrections = {
     "Mitchell Marner": "Mitch Marner",
@@ -49,6 +49,26 @@ corrections = {
     "Nick Perbix": "Nicklaus Perbix",
     "David Gust": "Dave Gust",
     "Jacob Lucchini": "Jake Lucchini",
+    "Alexander Georgiev": "Alexandar Georgiev",
+    "Cameron Talbot": "Cam Talbot",
+    "Calvin Jet Greaves": "Jet Greaves",
+    "Timmy Gettinger": "Timothy Gettinger",
+    "Mike Amadio": "Michael Amadio",
+    "Mattias Janmark-Nylen": "Mattias Janmark",
+    "Josh Norris": "Joshua Norris",
+    "Joshua Leivo": "Josh Leivo",
+    "Evgeni Svechnikov": "Evgeny Svechnikov",
+    "Evgeny Dadonov": "Evgenii Dadonov",
+    "Daniel O'Regan": "Danny O'Regan",
+    "Bradley Malone": "Brad Malone",
+    "Alexander Ovechkin": "Alex Ovechkin",
+    "Alexander Killorn": "Alex Killorn",
+    "Janis Jerome Moser": "J.J. Moser",
+    "Nicolas Daws": "Nico Daws",
+    "Nicholas Cicek": "Nick Cicek",
+    "Matthew Grzelcyk": "Matt Grzelcyk",
+    "Kristopher Letang": "Kris Letang",
+    "Joshua Mahura": "Josh Mahura",
 }
 
 RETIRED_PLAYERS = [
