@@ -1,13 +1,14 @@
 import argparse
 
-from hockey_pool_picker.crawl_cache import session
-from hockey_pool_picker.season import Season
-from hockey_pool_picker.sources.hockey_reference_games import HockeyReferenceGamesSource
-from hockey_pool_picker.sources.hockey_reference_players import HockeyReferencePlayersSource
-from hockey_pool_picker.sources.marqueur_cap_hit import MarqueurCapHitSource
+from hockey_pool_picker.core.season import Season
+from hockey_pool_picker.sources.games.hockey_reference import HockeyReferenceGamesSource
+from hockey_pool_picker.sources.stats.hockey_reference import (
+    HockeyReferencePlayersSource,
+)
+from hockey_pool_picker.sources.cap_hit.marqueur import MarqueurCapHitSource
 
 
-def run():
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--seasons",
@@ -40,4 +41,4 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    main()

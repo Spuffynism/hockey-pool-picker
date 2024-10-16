@@ -1,15 +1,11 @@
-import csv
 import json
-
-import pandas as pd
 
 from bs4 import BeautifulSoup
 
-from hockey_pool_picker import ndjson
-from hockey_pool_picker.common import massage_players
-from hockey_pool_picker.crawl_cache import session
-from hockey_pool_picker.dataframe_util import merge
-from hockey_pool_picker.season import Season
+from hockey_pool_picker.sources import ndjson
+from hockey_pool_picker.util import massage_players, merge_on_indices
+from hockey_pool_picker.sources.crawl_cache import session
+from hockey_pool_picker.core.season import Season
 
 whole_number_columns = {
     "age",
@@ -56,11 +52,11 @@ whole_number_columns = {
     "goals_against",
     "shots_against",
     "saves",
-    'shutouts',
-    'min_goalie',
-    'quality_starts_goalie',
-    'really_bad_starts_goalie',
-    'ga_pct_minus',
+    "shutouts",
+    "min_goalie",
+    "quality_starts_goalie",
+    "really_bad_starts_goalie",
+    "ga_pct_minus",
 }
 decimal_columns = {
     "shot_pct",
@@ -82,10 +78,10 @@ decimal_columns = {
     "ev_exp_on_goals_for",
     "ev_exp_on_goals_against",
     "save_pct",
-    'goals_against_avg',
-    'gps',
-    'quality_start_goalie_pct',
-    'gs_above_avg'
+    "goals_against_avg",
+    "gps",
+    "quality_start_goalie_pct",
+    "gs_above_avg",
 }
 
 
@@ -187,7 +183,7 @@ class HockeyReferencePlayersSource:
 
     def load(self, player_type):
         if player_type == "goalie":
-            columns  = {
+            columns = {
                 # TODO(nico): Add assertions to solver that makes sure columns are as expected
                 "player": "name",
                 "wins_goalie": "wins",
@@ -203,7 +199,9 @@ class HockeyReferencePlayersSource:
 
             expected_columns = set(columns.values())
             actual_columns = set(goalies_all.columns)
-            assert expected_columns.issubset(actual_columns), f"Missing goalie columns: {expected_columns.difference(actual_columns)}"
+            assert expected_columns.issubset(
+                actual_columns
+            ), f"Missing goalie columns: {expected_columns.difference(actual_columns)}"
 
             # We drop the second "Matt Murray" even though it's a different goalie to
             # remove duplicates. Ideally, we'd have a better way of identifying players.
@@ -224,13 +222,15 @@ class HockeyReferencePlayersSource:
         )
         expected_columns = set(columns.values())
         actual_columns = set(basic.columns)
-        assert expected_columns.issubset(actual_columns), f"Missing basic columns: {expected_columns.difference(actual_columns)}"
+        assert expected_columns.issubset(
+            actual_columns
+        ), f"Missing basic columns: {expected_columns.difference(actual_columns)}"
         basic = basic[basic["position"].isin(player_positions[player_type])]
 
         advanced = self._load_to_df("skaters", "advanced", columns={"pos": "position"})
         advanced = advanced[advanced["position"].isin(player_positions[player_type])]
 
-        merged = merge([basic, advanced, misc])
+        merged = merge_on_indices([basic, advanced, misc])
 
         return massage_players(merged)
 

@@ -4,12 +4,11 @@ from datetime import datetime
 from statistics import mean
 
 from dateutil.relativedelta import relativedelta
-from prompt_toolkit.win32_types import SMALL_RECT
 
-from hockey_pool_picker.season import Season
-from hockey_pool_picker.solver import Solution
-from hockey_pool_picker.common import PLAYER_TYPES
-from hockey_pool_picker.sources.hockey_reference_games import HockeyReferenceGamesSource
+from hockey_pool_picker.core.season import Season
+from hockey_pool_picker.core.solver import Solution
+from hockey_pool_picker.util import PLAYER_TYPES
+from hockey_pool_picker.sources.games.hockey_reference import HockeyReferenceGamesSource
 
 
 def evaluate_period(players_over_period, solution, evaluation_strategy):
@@ -56,7 +55,7 @@ class SeasonSimulator:
         self.picking_strategy = picking_strategy
 
     def progress(self, solution):
-        # TODO(nico): Revisit this amazingly beautiful logic 😇
+        # TODO(nico): Revisit this logic
         # regular season is from October 7, 2022, and ended April 14, 2023.
         games = HockeyReferenceGamesSource(self.season).load()
         periods = [
@@ -70,7 +69,9 @@ class SeasonSimulator:
         ]
         total_value = 0
         for period_season, period_month in periods:
-            start_look, end_look = get_month_period(period_season, period_month, days=-7)
+            start_look, end_look = get_month_period(
+                period_season, period_month, days=-7
+            )
             start_pts, end_pts = get_month_period(period_season, period_month)
 
             # - we could pick only players that have increased in the past 2-3 periods,

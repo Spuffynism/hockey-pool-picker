@@ -2,9 +2,9 @@ import re
 
 from bs4 import BeautifulSoup
 
-from hockey_pool_picker import ndjson
-from hockey_pool_picker.crawl_cache import session
-from hockey_pool_picker.season import Season
+from hockey_pool_picker.sources import ndjson
+from hockey_pool_picker.sources.crawl_cache import session
+from hockey_pool_picker.core.season import Season
 
 player_type_map = {
     "C": "forward",
@@ -23,7 +23,9 @@ class MarqueurCapHitSource:
         players = ndjson.read_to_df(f"marqueur/{self.season}.ndjson")
 
         df = players[players["type"] == player_type]
-        assert not df.empty, f"No players of type {player_type} found for season {self.season}"
+        assert (
+            not df.empty
+        ), f"No players of type {player_type} found for season {self.season}"
         return df
 
     def crawl(self):
@@ -33,23 +35,25 @@ class MarqueurCapHitSource:
         response = session.request("GET", url)
 
         soup = BeautifulSoup(response.content, "html.parser")
-        table = soup.select_one('body > div.w3-main > div.pl15.pr15.pb20 > div > div.p20 > table')
+        table = soup.select_one(
+            "body > div.w3-main > div.pl15.pr15.pb20 > div > div.p20 > table"
+        )
         players = []
-        for i, row in enumerate(table.find_all('tr')):
+        for i, row in enumerate(table.find_all("tr")):
             if i <= 1:
                 # skip the first 2 header rows
                 continue
-            cells = row.find_all('td')
+            cells = row.find_all("td")
             row_data = {}
             for j, cell in enumerate(cells):
                 if j == 0:
-                    row_data['name'] = cell.find('a').text
-                    position = re.findall(r'\((.*?)\)', cell.text)[0]
-                    row_data['type'] = player_type_map[position]
+                    row_data["name"] = cell.find("a").text
+                    position = re.findall(r"\((.*?)\)", cell.text)[0]
+                    row_data["type"] = player_type_map[position]
                 # the row has a varying number of td items for some reason... instead of plucking the
                 # cap hit by position, we just pick the last td, which always contains the cap hit.
                 elif j == len(cells) - 1:
-                    row_data['cap_hit'] = int(cell.text.replace(' ', '').strip())
+                    row_data["cap_hit"] = int(cell.text.replace(" ", "").strip())
 
             players.append(row_data)
 

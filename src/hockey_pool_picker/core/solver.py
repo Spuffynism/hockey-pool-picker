@@ -31,7 +31,11 @@ class Solution:
             + self.defenders_group["players"]
             + self.goalies_group["players"]
         )
-        #print(df[df.columns[~df.columns.isin([ID_COLUMN])]].to_string())
+        print(
+            df[df.columns[~df.columns.isin(["normalized_name"])]][
+                ["name", "position", "cap_hit"]
+            ].to_string()
+        )
 
         print(self._build_summary().to_string(index=False))
 
