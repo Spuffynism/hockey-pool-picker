@@ -1,3 +1,5 @@
+import pandas as pd
+
 from hockey_pool_picker.util import (
     inner_merge_dropping_duplicates,
     PLAYER_TYPES,
@@ -11,7 +13,7 @@ class BacktestingSource:
         self.past_season = past_season
         self.source = source
 
-    def load(self, picking_strategy, evaluation_strategy):
+    def load(self, picking_strategy, evaluation_strategy) -> (list[pd.DataFrame], list[pd.DataFrame]):
         past_pool = []
         present_pool = []
         for player_type in PLAYER_TYPES:

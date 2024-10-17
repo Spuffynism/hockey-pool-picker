@@ -7,19 +7,17 @@ from hockey_pool_picker.core.strategy import STRATEGIES
 from hockey_pool_picker.core.solver import CPSATSolver
 
 
-def main():
-    args = parse_args()
-
-    season = Season(start=args.season)
+def pick_pool(season_start=2022, evaluation_strategy='marqueur', picking_strategy='marqueur'):
+    season = Season(start=season_start)
     source = BacktestingSource(season, PlayersSource)
 
     past_pool, _ = source.load(
-        STRATEGIES[args.picking_strategy](), STRATEGIES[args.evaluation_strategy]()
+        STRATEGIES[picking_strategy](), STRATEGIES[evaluation_strategy]()
     )
 
     solver = CPSATSolver()
     solution = solver.pick_pool(
-        [group.to_dict("records") for group in past_pool], SEASONS_CAP_HIT[args.season]
+        [group.to_dict("records") for group in past_pool], SEASONS_CAP_HIT[season_start]
     )
 
     print("pick:")
@@ -28,7 +26,7 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Backtest pool picking strategies against from past to present seasons."
+        description="Pick a pool of players for a given season."
     )
     parser.add_argument(
         "--season",
@@ -56,4 +54,9 @@ def parse_args():
 
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    pick_pool(
+        season_start=args.season,
+        evaluation_strategy=args.evaluation_strategy,
+        picking_strategy=args.picking_strategy
+    )

@@ -10,15 +10,14 @@ from hockey_pool_picker.core.solver import CPSATSolver
 from hockey_pool_picker.sources.players import PlayersSource
 
 
-def main():
-    args = parse_args()
-    salary_cap = SEASONS_CAP_HIT[args.season]
+def backtest(season_start=2022, evaluation_strategy='marqueur', picking_strategy='marqueur', period_strategy='marqueur'):
+    salary_cap = SEASONS_CAP_HIT[season_start]
 
-    season = Season(start=args.season)
+    season = Season(start=season_start)
     source = BacktestingSource(season, PlayersSource)
 
     past_pool, present_pool = source.load(
-        STRATEGIES[args.picking_strategy](), STRATEGIES[args.evaluation_strategy]()
+        STRATEGIES[picking_strategy](), STRATEGIES[evaluation_strategy]()
     )
 
     solver = CPSATSolver()
@@ -38,8 +37,8 @@ def main():
         season,
         present_pool,
         salary_cap,
-        STRATEGIES[args.evaluation_strategy](),
-        STRATEGIES[args.period_strategy](),
+        STRATEGIES[evaluation_strategy](),
+        STRATEGIES[period_strategy](),
     )
     solution = season_simulator.progress(solution)
     solution.print()
@@ -47,7 +46,7 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Backtest pool picking strategies against from past to present seasons."
+        description="Backtest pool picking strategies from past to present seasons."
     )
     parser.add_argument(
         "--season",
@@ -82,4 +81,10 @@ def parse_args():
 
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    backtest(
+        season_start=args.season,
+        evaluation_strategy=args.evaluation_strategy,
+        picking_strategy=args.picking_strategy,
+        period_strategy=args.period_strategy
+    )
