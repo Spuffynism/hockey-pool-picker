@@ -1,8 +1,8 @@
 import pandas as pd
 from unidecode import unidecode
 
-# good is from hockey reference because it's where we get the stats
-# bad is from cap friendly because it's where we get the cap hit
+# bad is from the cap hit source
+# good is from hockey reference because it's where we get the stats from
 # bad -> good
 corrections = {
     "Mitchell Marner": "Mitch Marner",
@@ -49,6 +49,43 @@ corrections = {
     "Nick Perbix": "Nicklaus Perbix",
     "David Gust": "Dave Gust",
     "Jacob Lucchini": "Jake Lucchini",
+    "Alexander Georgiev": "Alexandar Georgiev",
+    "Cameron Talbot": "Cam Talbot",
+    "Calvin Jet Greaves": "Jet Greaves",
+    "Timmy Gettinger": "Timothy Gettinger",
+    "Mike Amadio": "Michael Amadio",
+    "Mattias Janmark-Nylen": "Mattias Janmark",
+    "Josh Norris": "Joshua Norris",
+    "Joshua Leivo": "Josh Leivo",
+    "Evgeni Svechnikov": "Evgeny Svechnikov",
+    "Evgeny Dadonov": "Evgenii Dadonov",
+    "Daniel O'Regan": "Danny O'Regan",
+    "Bradley Malone": "Brad Malone",
+    "Alexander Ovechkin": "Alex Ovechkin",
+    "Alexander Killorn": "Alex Killorn",
+    "Janis Jerome Moser": "J.J. Moser",
+    "Nicolas Daws": "Nico Daws",
+    "Nicholas Cicek": "Nick Cicek",
+    "Matthew Grzelcyk": "Matt Grzelcyk",
+    "Kristopher Letang": "Kris Letang",
+    "Joshua Mahura": "Josh Mahura",
+    "Vasily Ponomarev": "Vasiliy Ponomarev",
+    "Sammy Walker": "Samuel Walker",
+    "Matthew Rempe": "Matt Rempe",
+    "Georgi Merkulov": "Georgii Merkulov",
+    "Dmitry Voronkov": "Dmitri Voronkov",
+    "Cal Burke": "Callahan Burke",
+    "Simon Holmstom": "Simon Holmström",
+    "Ken Appleby": "Kenneth Appleby",
+    "Matt Kessel": "Matthew Kessel",
+    "Alexei Toropchenko": "Alexey Toropchenko",
+    "Matt Coronato": "Matthew Coronato",
+    "Artyom Zub": "Artem Zub",
+    "Janis Jerome  Moser": "J.J. Moser",
+    "Mikey Anderson": "Michael Anderson",
+    "Nicolai Knyzhov": "Nikolai Knyzhov",
+    "Emil Lilleberg": "Emil Martinsen Lilleberg",
+    "Dan Vladar": "Daniel Vladar",
 }
 
 RETIRED_PLAYERS = [
@@ -78,3 +115,19 @@ def massage_players(df):
 def inner_merge_dropping_duplicates(left, right, column):
     df = pd.merge(left, right, how="inner", on=[column], suffixes=("", "_y"))
     return df.drop(df.filter(regex="_y$").columns, axis=1)
+
+
+def merge_on_indices(dataframes):
+    """
+    Merges dataframes on index and drops duplicate columns.
+    :return:
+    """
+    assert len(dataframes) >= 2
+
+    merged = dataframes[0]
+    for df in dataframes[1:]:
+        merged = merged.merge(
+            df, left_index=True, right_index=True, how="left", suffixes=("", "_y")
+        )
+        merged.drop(merged.filter(regex="_y$").columns, axis=1, inplace=True)
+    return merged
