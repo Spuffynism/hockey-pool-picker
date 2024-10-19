@@ -12,13 +12,15 @@ Data for this project is sourced from:
 
 ## Usage
 
+All commands offer a `--help` flag to display their usage.
+
 ### Running the solver
 
 ```shell
 uv run src/hockey_pool_picker/backtest.py
 ```
 
-### Picking a pool for 
+### Picking a pool for an upcoming season
 
 ```shell
 uv run src/hockey_pool_picker/pick_pool.py
