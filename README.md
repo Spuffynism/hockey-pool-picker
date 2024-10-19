@@ -5,7 +5,7 @@ This is a tool to pick an optimal hockey team alignment for competing in [Marque
 Data for this project is sourced from:
 - [Hockey Reference](https://www.hockey-reference.com/), for player and game statistics across seasons.
 - [Puckpedia](https://puckpedia.com/), for player statistics and cap hits across seasons.
-- [Marquer](https://www.marqueur.com/), for player cap hits across seasons.
+- [Marqueur](https://www.marqueur.com/), for player cap hits across seasons.
 
 > [!NOTE]
 > I've intentionally left out the crawled or downloaded data to avoid any legal issues. Feel free to use the crawlers here or manually download the data.
